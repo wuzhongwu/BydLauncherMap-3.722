@@ -5260,10 +5260,10 @@
     # 中间
     #const v2, 0x1
     # 右边
-    const v2, 0x2
-    #invoke-static {}, Lcom/wzw/utils/map/MapSharedPreferences;->getInstrumentUiInterface()I
+    #const v2, 0x2
+    invoke-static {}, Lcom/wzw/utils/map/MapSharedPreferences;->getInstrumentUiInterface()I
 
-    #move-result v2
+    move-result v2
 
 
     const-string v3, "PlatformUtils"

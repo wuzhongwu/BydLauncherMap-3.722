@@ -352,6 +352,35 @@
 
     if-eqz v1, :cond_x_end
 
+    invoke-static {}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getInstance()Lcom/autosdk/bussiness/vehicle/PlatformUtils;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getInstrumentUiTypeInterface()I
+
+    move-result v2
+
+    const/4 v1, 0x2
+
+    if-ne v2, v1, :cond_x_center
+
+    invoke-static {}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getInstance()Lcom/autosdk/bussiness/vehicle/PlatformUtils;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getNaviType()I
+
+    move-result v1
+
+    const/4 v2, 0x3
+
+    if-ne v1, v2, :cond_x_center
+
+    const v2, 0x3f560419    # 0.836f
+
+    return v2
+
+    :cond_x_center
     const/high16 v2, 0x3f000000    # 0.5f
 
     return v2
