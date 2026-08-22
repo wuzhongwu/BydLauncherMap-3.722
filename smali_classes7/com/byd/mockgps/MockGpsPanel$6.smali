@@ -21,7 +21,7 @@
 .method constructor <init>()V
     .registers 1
 
-    .line 176
+    .line 195
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -34,10 +34,10 @@
 
     const-wide/16 p0, 0x0
 
-    .line 179
+    .line 198
     invoke-static {p0, p1}, Lcom/byd/mockgps/MockGps;->setSpeedKmh(D)V
 
-    .line 180
+    .line 199
     # invokes: Lcom/byd/mockgps/MockGpsPanel;->refresh()V
     invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$000()V
 

@@ -645,6 +645,12 @@
 
     invoke-static {v0, p1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
+    invoke-static {}, Lcom/byd/lane/aos/LaneAosManager;->getInstance()Lcom/byd/lane/aos/LaneAosManager;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lcom/byd/lane/aos/LaneAosManager;->initLaneServiceForCluster()V
+
     const/4 p1, 0x2
 
     return p1
@@ -1278,6 +1284,8 @@
 
     iput-boolean v3, v0, Lcom/autonavi/gbl/map/model/DeviceAttribute;->isRecordeable:Z
 
+    iput v3, v0, Lcom/autonavi/gbl/map/model/DeviceAttribute;->renderVendorType:I
+
     if-lez p1, :cond_1
 
     new-instance v5, Lcom/autosdk/bussiness/map/observer/DeviceExtraObservice;
@@ -1535,6 +1543,18 @@
 
     :cond_4
     invoke-virtual {p0, v2, v6}, Lcom/autosdk/bussiness/map/MapController;->set3Dobj(Lcom/autonavi/gbl/map/MapView;Z)V
+
+    invoke-static {}, Lcom/autosdk/bussiness/map/BuildingPref;->getShow()Z
+
+    move-result v6
+
+    invoke-virtual {p0, v2, v6}, Lcom/autosdk/bussiness/map/MapController;->set3Dobj(Lcom/autonavi/gbl/map/MapView;Z)V
+
+    invoke-virtual {v2}, Lcom/autonavi/gbl/map/MapView;->getOperatorBusiness()Lcom/autonavi/gbl/map/OperatorBusiness;
+
+    move-result-object v4
+
+    invoke-virtual {v4, v6}, Lcom/autonavi/gbl/map/OperatorBusiness;->showBuildingNormal(Z)V
 
     invoke-direct {p0, v2, v3}, Lcom/autosdk/bussiness/map/MapController;->setBaseMapRoadNameVisible(Lcom/autonavi/gbl/map/MapView;Z)V
 
@@ -5312,6 +5332,30 @@
 .method public setMapMode(ILcom/autonavi/gbl/map/model/MapviewModeParam;Z)V
     .locals 12
 
+    # 仪表的缩放/俯仰以悬浮面板参数为准
+    const/4 v0, 0x2
+
+    if-ne p1, v0, :cond_keep_lane
+
+    if-eqz p2, :cond_keep_lane
+
+    const-string v0, "zoom"
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v0
+
+    iput v0, p2, Lcom/autonavi/gbl/map/model/MapviewModeParam;->mapZoomLevel:F
+
+    const-string v0, "pitch"
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v0
+
+    iput v0, p2, Lcom/autonavi/gbl/map/model/MapviewModeParam;->pitchAngle:F
+
+    :cond_keep_lane
     const/4 v0, 0x2
 
     const/4 v1, 0x0

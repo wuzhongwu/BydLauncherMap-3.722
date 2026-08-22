@@ -33,6 +33,12 @@
 
     invoke-virtual {v0, v2, v1}, Lcom/autosdk/bussiness/map/MapController;->setBuildingNormal(IZ)V
 
+    const/4 v2, 0x2
+
+    invoke-virtual {v0, v2, v1}, Lcom/autosdk/bussiness/map/MapController;->set3Dobj(IZ)V
+
+    invoke-virtual {v0, v2, v1}, Lcom/autosdk/bussiness/map/MapController;->setBuildingNormal(IZ)V
+
     return-void
 .end method
 

@@ -21,7 +21,7 @@
 .method constructor <init>()V
     .registers 1
 
-    .line 125
+    .line 144
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -32,13 +32,13 @@
 .method public onClick(Landroid/view/View;)V
     .registers 2
 
-    .line 128
+    .line 147
     invoke-static {}, Lcom/byd/mockgps/MockGps;->disable()V
 
-    .line 129
+    .line 148
     invoke-static {}, Lcom/byd/mockgps/MockGpsUi;->panelClosed()V
 
-    .line 130
+    .line 149
     invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->hide()V
 
     return-void

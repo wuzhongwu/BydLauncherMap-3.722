@@ -1537,6 +1537,30 @@
 
     iget-object v2, p0, Lcom/autosdk/bussiness/layer/LayerController;->mBizService:Lcom/autonavi/gbl/layer/BizControlService;
 
+    invoke-virtual {v2, v4, v5}, Lcom/autonavi/gbl/layer/BizControlService;->setCollisionIntervalTime(II)Z
+
+    add-int/lit8 v4, v4, 0x1
+
+    iget-object v2, p0, Lcom/autosdk/bussiness/layer/LayerController;->mBizService:Lcom/autonavi/gbl/layer/BizControlService;
+
+    const-string v3, "/android_assets/blRes/LayerAsset/"
+
+    invoke-virtual {v2, v4, v3}, Lcom/autonavi/gbl/layer/BizControlService;->init(ILjava/lang/String;)Z
+
+    iget-object v2, p0, Lcom/autosdk/bussiness/layer/LayerController;->mBizService:Lcom/autonavi/gbl/layer/BizControlService;
+
+    invoke-virtual {p1, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
+
+    move-result-object v3
+
+    check-cast v3, Lcom/autosdk/bussiness/layer/LayerControllerInitParam;
+
+    iget-object v3, v3, Lcom/autosdk/bussiness/layer/LayerControllerInitParam;->prepareLayerStyle:Lcom/autonavi/gbl/map/layer/observer/IPrepareLayerStyle;
+
+    invoke-virtual {v2, v4, v3}, Lcom/autonavi/gbl/layer/BizControlService;->setStyle(ILcom/autonavi/gbl/map/layer/observer/IPrepareLayerStyle;)V
+
+    iget-object v2, p0, Lcom/autosdk/bussiness/layer/LayerController;->mBizService:Lcom/autonavi/gbl/layer/BizControlService;
+
     goto :goto_1
 
     :cond_5

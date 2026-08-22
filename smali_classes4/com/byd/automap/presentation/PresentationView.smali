@@ -1146,7 +1146,8 @@
     move-result-object v0
 
     #const/high16 v1, 0x41800000    # 16.0f
-    const/high16 v1, 0x41880000    # 17.0f
+    #const/high16 v1, 0x41880000    # 17.0f
+    const/high16 v1, 0x41A00000    # 20.0f
 
     invoke-virtual {v0, v5, v1}, Lcom/autosdk/bussiness/map/MapController;->setMaxZoomLevel(IF)V
 
@@ -3949,6 +3950,13 @@
     move-result v3
     :cond_end
 
+    # 仪表处于车道级时保持车道级自身的缩放，不被小屏/全屏切换冲掉
+    const-string v4, "zoom"
+
+    invoke-static {v4}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v3
+
     invoke-static {}, Lf/h/c/n0/p2;->n()Z
 
     move-result p1
@@ -4088,8 +4096,18 @@
 
     move-result-object p1
 
-    #const/high16 v0, 0x42340000    # 45.0f
-    const/high16 v0, 0x42600000    # 90.0f
+    # 车道级下俯仰角交给引擎，普通模式取悬浮面板参数
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->isInLane()Z
+
+    move-result v0
+
+    if-nez v0, :cond_4
+
+    const-string v0, "pitch"
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v0
 
     invoke-virtual {p1, v0}, Lcom/autonavi/gbl/map/OperatorPosture;->setPitchAngle(F)V
 
@@ -4106,6 +4124,9 @@
     const/4 v0, 0x2
 
     invoke-virtual {v1, v0}, Lcom/autosdk/bussiness/map/MapController;->refresh(I)V
+
+    # 兜底：切换显示模式后把车道级的缩放/俯仰重新贴回去
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->reapply()V
 
     return-void
 .end method
@@ -4855,12 +4876,20 @@
 
     if-lez v3, :cond_1
 
+    # 仪表处于车道级时不做回正缩放，避免冲掉车道级视角
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->isInLane()Z
+
+    move-result v3
+
+    if-nez v3, :cond_1
+
     invoke-static {}, Lcom/autosdk/bussiness/map/MapController;->getInstance()Lcom/autosdk/bussiness/map/MapController;
 
     move-result-object v3
 
     #const/high16 v4, 0x41800000    # 16.0f
-    const/high16 v4, 0x41880000    # 17.0f
+    #const/high16 v4, 0x41880000    # 17.0f
+    const/high16 v4, 0x41a00000    # 20.0f
 
     invoke-virtual {v3, v2, v4}, Lcom/autosdk/bussiness/map/MapController;->setZoomLevel(IF)V
 

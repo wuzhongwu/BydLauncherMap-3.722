@@ -390,6 +390,13 @@
 
     #const/high16 v1, 0x41800000    # 16.0f
 
+    # 仪表缩放取悬浮面板参数
+    const-string v2, "zoom"
+
+    invoke-static {v2}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v1
+
     iput v1, v0, Lcom/autonavi/gbl/map/model/MapviewModeParam;->mapZoomLevel:F
 
     invoke-static {}, Lcom/autosdk/bussiness/manager/SDKManager;->getInstance()Lcom/autosdk/bussiness/manager/SDKManager;
@@ -426,11 +433,23 @@
 
     move-result-object p1
 
-    const/high16 v0, 0x42b40000    # 90.0f
+    # 车道级下俯仰角交给引擎，普通模式取悬浮面板参数
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->isInLane()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    const-string v0, "pitch"
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v0
 
     invoke-virtual {p1, v0}, Lcom/autonavi/gbl/map/OperatorPosture;->setPitchAngle(F)V
 
     :cond_0
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->reapply()V
 
     invoke-static {}, Lcom/autosdk/bussiness/manager/SDKManager;->getInstance()Lcom/autosdk/bussiness/manager/SDKManager;
 

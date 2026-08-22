@@ -3,12 +3,12 @@
 .source "MockGpsPanel.java"
 
 # interfaces
-.implements Landroid/content/DialogInterface$OnClickListener;
+.implements Landroid/view/View$OnClickListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/byd/mockgps/MockGpsPanel;->askTeleport(Landroid/content/Context;)V
+    value = Lcom/byd/mockgps/MockGpsPanel;->build(Landroid/content/Context;)Landroid/view/View;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,22 +20,18 @@
 # instance fields
 .field final synthetic val$ctx:Landroid/content/Context;
 
-.field final synthetic val$input:Landroid/widget/EditText;
-
 
 # direct methods
-.method constructor <init>(Landroid/content/Context;Landroid/widget/EditText;)V
-    .registers 3
+.method constructor <init>(Landroid/content/Context;)V
+    .registers 2
     .annotation system Ldalvik/annotation/Signature;
         value = {
             "()V"
         }
     .end annotation
 
-    .line 254
+    .line 258
     iput-object p1, p0, Lcom/byd/mockgps/MockGpsPanel$11;->val$ctx:Landroid/content/Context;
-
-    iput-object p2, p0, Lcom/byd/mockgps/MockGpsPanel$11;->val$input:Landroid/widget/EditText;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -44,24 +40,14 @@
 
 
 # virtual methods
-.method public onClick(Landroid/content/DialogInterface;I)V
-    .registers 3
+.method public onClick(Landroid/view/View;)V
+    .registers 2
 
-    .line 257
-    iget-object p1, p0, Lcom/byd/mockgps/MockGpsPanel$11;->val$ctx:Landroid/content/Context;
+    .line 261
+    iget-object p0, p0, Lcom/byd/mockgps/MockGpsPanel$11;->val$ctx:Landroid/content/Context;
 
-    iget-object p0, p0, Lcom/byd/mockgps/MockGpsPanel$11;->val$input:Landroid/widget/EditText;
-
-    invoke-virtual {p0}, Landroid/widget/EditText;->getText()Landroid/text/Editable;
-
-    move-result-object p0
-
-    invoke-virtual {p0}, Ljava/lang/Object;->toString()Ljava/lang/String;
-
-    move-result-object p0
-
-    # invokes: Lcom/byd/mockgps/MockGpsPanel;->doTeleport(Landroid/content/Context;Ljava/lang/String;)V
-    invoke-static {p1, p0}, Lcom/byd/mockgps/MockGpsPanel;->access$500(Landroid/content/Context;Ljava/lang/String;)V
+    # invokes: Lcom/byd/mockgps/MockGpsPanel;->askMockTime(Landroid/content/Context;)V
+    invoke-static {p0}, Lcom/byd/mockgps/MockGpsPanel;->access$500(Landroid/content/Context;)V
 
     return-void
 .end method

@@ -102,6 +102,30 @@
 
     invoke-static {p2, v2, p1}, Lcom/autosdk/bussiness/common/utils/Logger;->d(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
 
+    invoke-static {}, Lcom/autonavi/gbl/servicemanager/ServiceMgr;->getServiceMgrInstance()Lcom/autonavi/gbl/servicemanager/ServiceMgr;
+
+    move-result-object p1
+
+    const/16 p2, 0x1a
+
+    invoke-virtual {p1, p2}, Lcom/autonavi/gbl/servicemanager/ServiceMgr;->getBLService(I)Lcom/autonavi/gbl/servicemanager/IService;
+
+    move-result-object p1
+
+    check-cast p1, Lcom/autonavi/gbl/lane/LaneService;
+
+    if-eqz p1, :cond_1
+
+    invoke-virtual {p1}, Lcom/autonavi/gbl/lane/LaneService;->isInit()I
+
+    move-result p1
+
+    const/4 p2, 0x3
+
+    if-ne p1, p2, :cond_1
+
+    const-string p2, "LaneMapViewObserver"
+
     invoke-static {}, Lf/h/c/c0;->a()Landroid/app/Application;
 
     move-result-object p1

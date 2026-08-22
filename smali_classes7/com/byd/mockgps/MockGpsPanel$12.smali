@@ -3,12 +3,12 @@
 .source "MockGpsPanel.java"
 
 # interfaces
-.implements Landroid/view/View$OnTouchListener;
+.implements Landroid/view/View$OnClickListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/byd/mockgps/MockGpsPanel;->makeDraggable(Landroid/view/View;Landroid/view/View;)V
+    value = Lcom/byd/mockgps/MockGpsPanel;->build(Landroid/content/Context;)Landroid/view/View;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -18,19 +18,11 @@
 
 
 # instance fields
-.field private downX:F
-
-.field private downY:F
-
-.field private startLeft:I
-
-.field private startTop:I
-
-.field final synthetic val$target:Landroid/view/View;
+.field final synthetic val$ctx:Landroid/content/Context;
 
 
 # direct methods
-.method constructor <init>(Landroid/view/View;)V
+.method constructor <init>(Landroid/content/Context;)V
     .registers 2
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -38,8 +30,8 @@
         }
     .end annotation
 
-    .line 324
-    iput-object p1, p0, Lcom/byd/mockgps/MockGpsPanel$12;->val$target:Landroid/view/View;
+    .line 267
+    iput-object p1, p0, Lcom/byd/mockgps/MockGpsPanel$12;->val$ctx:Landroid/content/Context;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -48,128 +40,74 @@
 
 
 # virtual methods
-.method public onTouch(Landroid/view/View;Landroid/view/MotionEvent;)Z
-    .registers 8
+.method public onClick(Landroid/view/View;)V
+    .registers 4
 
-    .line 332
-    iget-object p1, p0, Lcom/byd/mockgps/MockGpsPanel$12;->val$target:Landroid/view/View;
+    .line 270
+    # getter for: Lcom/byd/mockgps/MockGpsPanel;->weatherIndex:I
+    invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$600()I
 
-    invoke-virtual {p1}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
+    move-result p1
+
+    add-int/lit8 p1, p1, 0x1
+
+    # getter for: Lcom/byd/mockgps/MockGpsPanel;->WEATHER_CYCLE:[I
+    invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$700()[I
+
+    move-result-object v0
+
+    array-length v0, v0
+
+    rem-int/2addr p1, v0
+
+    # setter for: Lcom/byd/mockgps/MockGpsPanel;->weatherIndex:I
+    invoke-static {p1}, Lcom/byd/mockgps/MockGpsPanel;->access$602(I)I
+
+    .line 271
+    # getter for: Lcom/byd/mockgps/MockGpsPanel;->WEATHER_CYCLE:[I
+    invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$700()[I
 
     move-result-object p1
 
-    .line 333
-    instance-of v0, p1, Landroid/widget/FrameLayout$LayoutParams;
-
-    const/4 v1, 0x0
-
-    if-nez v0, :cond_c
-
-    return v1
-
-    .line 336
-    :cond_c
-    check-cast p1, Landroid/widget/FrameLayout$LayoutParams;
-
-    .line 337
-    invoke-virtual {p2}, Landroid/view/MotionEvent;->getActionMasked()I
+    # getter for: Lcom/byd/mockgps/MockGpsPanel;->weatherIndex:I
+    invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$600()I
 
     move-result v0
 
-    const/4 v2, 0x1
+    aget p1, p1, v0
 
-    if-eqz v0, :cond_45
+    .line 272
+    invoke-static {p1}, Lcom/byd/weather/DynamicWeather;->force(I)V
 
-    const/4 v3, 0x2
+    .line 273
+    iget-object p0, p0, Lcom/byd/mockgps/MockGpsPanel$12;->val$ctx:Landroid/content/Context;
 
-    if-eq v0, v3, :cond_19
+    if-gez p1, :cond_23
 
-    return v1
+    const-string p1, "\u5929\u6c14\u8ddf\u968f\u771f\u5b9e\u6570\u636e"
 
-    .line 345
-    :cond_19
-    iget v0, p0, Lcom/byd/mockgps/MockGpsPanel$12;->startLeft:I
+    goto :goto_31
 
-    invoke-virtual {p2}, Landroid/view/MotionEvent;->getRawX()F
+    :cond_23
+    new-instance v0, Ljava/lang/StringBuilder;
 
-    move-result v3
+    const-string v1, "\u5f3a\u5236\u5929\u6c14\u7f16\u7801 "
 
-    iget v4, p0, Lcom/byd/mockgps/MockGpsPanel$12;->downX:F
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
 
-    sub-float/2addr v3, v4
+    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    float-to-int v3, v3
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    add-int/2addr v0, v3
+    move-result-object p1
 
-    iput v0, p1, Landroid/widget/FrameLayout$LayoutParams;->leftMargin:I
+    :goto_31
+    # invokes: Lcom/byd/mockgps/MockGpsPanel;->toast(Landroid/content/Context;Ljava/lang/String;)V
+    invoke-static {p0, p1}, Lcom/byd/mockgps/MockGpsPanel;->access$200(Landroid/content/Context;Ljava/lang/String;)V
 
-    .line 346
-    iget v0, p0, Lcom/byd/mockgps/MockGpsPanel$12;->startTop:I
+    .line 274
+    # invokes: Lcom/byd/mockgps/MockGpsPanel;->refresh()V
+    invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$000()V
 
-    invoke-virtual {p2}, Landroid/view/MotionEvent;->getRawY()F
-
-    move-result p2
-
-    iget v3, p0, Lcom/byd/mockgps/MockGpsPanel$12;->downY:F
-
-    sub-float/2addr p2, v3
-
-    float-to-int p2, p2
-
-    add-int/2addr v0, p2
-
-    iput v0, p1, Landroid/widget/FrameLayout$LayoutParams;->topMargin:I
-
-    .line 347
-    iget p2, p1, Landroid/widget/FrameLayout$LayoutParams;->leftMargin:I
-
-    if-gez p2, :cond_39
-
-    .line 348
-    iput v1, p1, Landroid/widget/FrameLayout$LayoutParams;->leftMargin:I
-
-    .line 350
-    :cond_39
-    iget p2, p1, Landroid/widget/FrameLayout$LayoutParams;->topMargin:I
-
-    if-gez p2, :cond_3f
-
-    .line 351
-    iput v1, p1, Landroid/widget/FrameLayout$LayoutParams;->topMargin:I
-
-    .line 353
-    :cond_3f
-    iget-object p0, p0, Lcom/byd/mockgps/MockGpsPanel$12;->val$target:Landroid/view/View;
-
-    invoke-virtual {p0, p1}, Landroid/view/View;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
-
-    return v2
-
-    .line 339
-    :cond_45
-    invoke-virtual {p2}, Landroid/view/MotionEvent;->getRawX()F
-
-    move-result v0
-
-    iput v0, p0, Lcom/byd/mockgps/MockGpsPanel$12;->downX:F
-
-    .line 340
-    invoke-virtual {p2}, Landroid/view/MotionEvent;->getRawY()F
-
-    move-result p2
-
-    iput p2, p0, Lcom/byd/mockgps/MockGpsPanel$12;->downY:F
-
-    .line 341
-    iget p2, p1, Landroid/widget/FrameLayout$LayoutParams;->leftMargin:I
-
-    iput p2, p0, Lcom/byd/mockgps/MockGpsPanel$12;->startLeft:I
-
-    .line 342
-    iget p1, p1, Landroid/widget/FrameLayout$LayoutParams;->topMargin:I
-
-    iput p1, p0, Lcom/byd/mockgps/MockGpsPanel$12;->startTop:I
-
-    return v2
+    return-void
 .end method

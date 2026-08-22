@@ -1470,6 +1470,12 @@
 
     invoke-interface {p1, v0}, Lf/k/l/g/b/c;->initLaneService(Landroid/content/Context;)V
 
+    invoke-static {}, Lcom/byd/lane/aos/LaneAosManager;->getInstance()Lcom/byd/lane/aos/LaneAosManager;
+
+    move-result-object p1
+
+    invoke-virtual {p1}, Lcom/byd/lane/aos/LaneAosManager;->initLaneServiceForCluster()V
+
     return-void
 .end method
 

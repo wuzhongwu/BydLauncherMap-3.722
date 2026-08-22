@@ -13,6 +13,10 @@
 .end annotation
 
 
+# static fields
+.field public static sLast:Lg/a/c/p;
+
+
 # instance fields
 .field public c:Lg/a/f/e;
 
@@ -1260,6 +1264,8 @@
 .method public G()V
     .locals 16
 
+    sput-object p0, Lg/a/c/p;->sLast:Lg/a/c/p;
+
     move-object/from16 v0, p0
 
     invoke-static {}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->isDiLink5_1()Z
@@ -1379,6 +1385,10 @@
 
     move v7, v1
 
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
+
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
     const/4 v4, 0x6
@@ -1400,6 +1410,10 @@
     float-to-int v7, v1
 
     move-object v2, v8
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -1443,6 +1457,10 @@
 
     move v5, v9
 
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
+
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
     const/4 v4, 0x6
@@ -1464,6 +1482,10 @@
     float-to-int v7, v1
 
     move-object v2, v8
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -1519,6 +1541,10 @@
     move v3, v11
 
     move v5, v9
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -1599,6 +1625,10 @@
 
     move v5, v9
 
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
+
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
     const/4 v4, 0x6
@@ -1622,6 +1652,10 @@
     move-object v2, v8
 
     move v3, v11
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -1660,6 +1694,10 @@
     move v3, v11
 
     move v5, v9
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -1726,6 +1764,10 @@
 
     move v5, v9
 
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
+
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
     const/4 v4, 0x6
@@ -1753,6 +1795,10 @@
     move-object v2, v8
 
     move v3, v11
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -1792,6 +1838,10 @@
     move v3, v11
 
     move v5, v9
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -1848,6 +1898,10 @@
 
     move v5, v9
 
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
+
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
     const/4 v4, 0x6
@@ -1875,6 +1929,10 @@
     move-object v2, v8
 
     move v3, v11
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -1922,6 +1980,10 @@
 
     move v5, v9
 
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
+
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
     const/4 v4, 0x6
@@ -1945,6 +2007,10 @@
     move-object v2, v8
 
     move v3, v11
+
+    invoke-static {v4, v7}, Lcom/byd/lane/ClusterLaneMode;->adjust(II)I
+
+    move-result v7
 
     invoke-virtual/range {v2 .. v7}, Landroidx/constraintlayout/widget/ConstraintSet;->connect(IIIII)V
 
@@ -6186,5 +6252,44 @@
     iput-object v0, p0, Lg/a/c/p;->j:Lcom/autonavi/view/custom/CustomCruiseTrafficLaneView;
 
     :cond_3
+    return-void
+.end method
+
+.method public static relayout()V
+    .locals 3
+
+    sget-object v0, Lg/a/c/p;->sLast:Lg/a/c/p;
+
+    if-eqz v0, :goto_done
+
+    :try_start_0
+    iget-object v1, v0, Lg/a/a/a/b;->b:Landroid/view/View;
+
+    if-eqz v1, :goto_done
+
+    sget v2, Lcom/autosdk/drive/R$id;->cl_navi_and_route_container:I
+
+    invoke-virtual {v1, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object v1
+
+    if-eqz v1, :goto_done
+
+    invoke-virtual {v1}, Landroid/view/View;->getVisibility()I
+
+    move-result v1
+
+    if-nez v1, :goto_done
+
+    invoke-virtual {v0}, Lg/a/c/p;->G()V
+    :try_end_0
+    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
+
+    :goto_done
+    return-void
+
+    :catch_0
+    move-exception v0
+
     return-void
 .end method

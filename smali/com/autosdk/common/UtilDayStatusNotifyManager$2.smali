@@ -44,6 +44,55 @@
     return v0
 
     :cond_0
+    invoke-static {}, Lcom/autonavi/gbl/util/TimeUtil;->getLocalTime2()Lcom/autonavi/gbl/util/model/DateTime;
+
+    move-result-object v1
+
+    invoke-static {}, Lcom/byd/mockgps/MockTime;->ofDayMs()J
+
+    move-result-wide v3
+
+    const-wide/16 v5, 0x0
+
+    cmp-long v7, v3, v5
+
+    if-ltz v7, :cond_mock_off
+
+    const-wide/16 v5, 0x3e8
+
+    div-long v5, v3, v5
+
+    long-to-int v5, v5
+
+    const/16 v6, 0xe10
+
+    div-int v6, v5, v6
+
+    const/16 v7, 0x3c
+
+    div-int v7, v5, v7
+
+    rem-int/lit8 v7, v7, 0x3c
+
+    rem-int/lit8 v3, v5, 0x3c
+
+    new-instance v4, Lcom/autonavi/gbl/util/model/Time;
+
+    invoke-direct {v4, v6, v7, v3, v0}, Lcom/autonavi/gbl/util/model/Time;-><init>(BBBB)V
+
+    iput-object v4, v1, Lcom/autonavi/gbl/util/model/DateTime;->time:Lcom/autonavi/gbl/util/model/Time;
+
+    iget-object v6, v1, Lcom/autonavi/gbl/util/model/DateTime;->date:Lcom/autonavi/gbl/util/model/Date;
+
+    iput-object v6, p1, Lcom/autonavi/gbl/util/model/DateTime;->date:Lcom/autonavi/gbl/util/model/Date;
+
+    iput-object v4, p1, Lcom/autonavi/gbl/util/model/DateTime;->time:Lcom/autonavi/gbl/util/model/Time;
+
+    const/4 v1, 0x1
+
+    return v1
+
+    :cond_mock_off
     sget-boolean v1, Lcom/autosdk/bussiness/settings/SettingConstant;->is3DMap:Z
 
     if-nez v1, :cond_1

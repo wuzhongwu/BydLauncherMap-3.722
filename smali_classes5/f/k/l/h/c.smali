@@ -418,11 +418,15 @@
 
     const/16 v1, 0x1c
 
-    invoke-virtual {v0, v1, v8}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+    invoke-virtual {v0, v1, v2}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
 
     const/16 v1, 0x6a
 
-    invoke-virtual {v0, v1, v8}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+    invoke-virtual {v0, v1, v2}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+
+    const/16 v1, 0x69
+
+    invoke-virtual {v0, v1, v2}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
 
     return-void
 .end method
@@ -553,9 +557,13 @@
 
     invoke-virtual {p0}, Lf/k/l/h/c;->x()V
 
-    invoke-virtual {v0, v2, v7}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+    invoke-virtual {v0, v2, v8}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
 
-    invoke-virtual {v0, v1, v7}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+    invoke-virtual {v0, v1, v8}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+
+    const/16 v3, 0x69
+
+    invoke-virtual {v0, v3, v8}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
 
     invoke-virtual {v0, v8, v7, v8}, Lcom/autonavi/gbl/map/MapView;->setControllerStatesOperator(IIZ)Z
 
@@ -600,6 +608,10 @@
 
     invoke-virtual {v0, v1, v8}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
 
+    const/16 v3, 0x69
+
+    invoke-virtual {v0, v3, v8}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+
     invoke-static {}, Lf/h/c/j0/l0;->b()Lf/h/c/j0/l0;
 
     move-result-object p1
@@ -626,6 +638,43 @@
     invoke-virtual {p1, v0, v8}, Lcom/autosdk/bussiness/map/MapController;->lockMapPitchAngle(Lcom/autonavi/gbl/map/MapView;Z)V
 
     :goto_0
+    return-void
+.end method
+
+.method public final aa()V
+    .locals 3
+
+    invoke-static {}, Lcom/autosdk/bussiness/manager/SDKManager;->getInstance()Lcom/autosdk/bussiness/manager/SDKManager;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lcom/autosdk/bussiness/manager/SDKManager;->getMapController()Lcom/autosdk/bussiness/map/MapController;
+
+    move-result-object v0
+
+    iget v1, p0, Lf/k/l/h/c;->a:I
+
+    invoke-virtual {v0, v1}, Lcom/autosdk/bussiness/map/MapController;->getMapView(I)Lcom/autonavi/gbl/map/MapView;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_0
+
+    const/4 v2, 0x1
+
+    const/16 v1, 0x1c
+
+    invoke-virtual {v0, v1, v2}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+
+    const/16 v1, 0x69
+
+    invoke-virtual {v0, v1, v2}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+
+    const/16 v1, 0x6a
+
+    invoke-virtual {v0, v1, v2}, Lcom/autonavi/gbl/map/MapView;->setMapViewStatesOperator(II)Z
+
+    :cond_0
     return-void
 .end method
 
@@ -691,6 +740,8 @@
     invoke-static {v1, v0, p1}, Lcom/autosdk/bussiness/common/utils/Logger;->e(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
 
     :cond_2
+    invoke-virtual {p0}, Lf/k/l/h/c;->aa()V
+
     return-void
 .end method
 
@@ -744,6 +795,8 @@
     invoke-virtual {v4, p1}, Lcom/autonavi/gbl/lane/LaneRenderService;->enterLane(Lcom/autonavi/gbl/lane/model/EnterLaneParam;)J
 
     move-result-wide v4
+
+    invoke-virtual {p0}, Lf/k/l/h/c;->aa()V
 
     const/4 p1, 0x3
 
@@ -843,6 +896,8 @@
     invoke-virtual {v3, p1}, Lcom/autonavi/gbl/lane/LaneRenderService;->enterLane(Lcom/autonavi/gbl/lane/model/ExitLaneParam;)J
 
     move-result-wide v3
+
+    invoke-virtual {p0}, Lf/k/l/h/c;->aa()V
 
     const/4 p1, 0x3
 

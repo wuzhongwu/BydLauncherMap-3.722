@@ -177,6 +177,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SDKBackground"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.byd.carmodel.CarModelImportActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <service
             android:name="com.byd.automap.service.PushService"
             android:enabled="true"

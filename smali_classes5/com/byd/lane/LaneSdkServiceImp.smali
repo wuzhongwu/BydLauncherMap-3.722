@@ -91,6 +91,158 @@
 
     iput-object p1, p0, Lcom/byd/lane/LaneSdkServiceImp;->laneLayers:Ljava/util/Map;
 
+    invoke-static {p0}, Lcom/byd/lane/ClusterLaneMode;->attach(Lcom/byd/lane/LaneSdkServiceImp;)V
+
+    return-void
+.end method
+
+.method private static pushCluster(Lcom/byd/lane/observer/BydLaneObserverImp;I)V
+    .locals 3
+
+    const/4 v2, 0x0
+
+    if-nez p1, :cond_state
+
+    invoke-virtual {p0}, Lcom/byd/lane/observer/BydLaneObserverImp;->isSDKInLane()Z
+
+    move-result v2
+
+    :cond_state
+    invoke-static {v2}, Lcom/byd/lane/ClusterLaneMode;->setShowingLane(Z)V
+
+    const-string v0, "proj_x"
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v0
+
+    const-string v1, "proj_y"
+
+    invoke-static {v1}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v1
+
+    invoke-virtual {p0, v0, v1}, Lcom/byd/lane/observer/BydLaneObserverImp;->setMapCenter(FF)V
+
+    invoke-virtual {p0, p1}, Lcom/byd/lane/observer/BydLaneObserverImp;->doDnpRoadControl(I)V
+
+    invoke-static {v2}, Lcom/byd/lane/ClusterLaneMode;->scheduleApply(Z)V
+
+    return-void
+.end method
+
+.method public clusterObserver()Lcom/byd/lane/observer/BydLaneObserverImp;
+    .locals 2
+
+    iget-object v0, p0, Lcom/byd/lane/LaneSdkServiceImp;->laneObservers:Ljava/util/Map;
+
+    const/4 v1, 0x2
+
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v1
+
+    invoke-interface {v0, v1}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/byd/lane/observer/BydLaneObserverImp;
+
+    return-object v0
+.end method
+
+.method public clusterLaneCtrl()Lf/k/l/h/c;
+    .locals 2
+
+    iget-object v0, p0, Lcom/byd/lane/LaneSdkServiceImp;->laneLayers:Ljava/util/Map;
+
+    const/4 v1, 0x2
+
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v1
+
+    invoke-interface {v0, v1}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Lf/k/l/h/c;
+
+    return-object v0
+.end method
+
+.method public applyClusterLaneMode()V
+    .locals 3
+
+    invoke-virtual {p0}, Lcom/byd/lane/LaneSdkServiceImp;->clusterObserver()Lcom/byd/lane/observer/BydLaneObserverImp;
+
+    move-result-object v0
+
+    if-nez v0, :cond_0
+
+    return-void
+
+    :cond_0
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->getMode()I
+
+    move-result v1
+
+    const/4 v2, 0x1
+
+    if-ne v1, v2, :cond_1
+
+    invoke-virtual {v0}, Lcom/byd/lane/observer/BydLaneObserverImp;->isSDKInLane()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    const/4 v2, 0x0
+
+    :cond_1
+    invoke-static {v0, v2}, Lcom/byd/lane/LaneSdkServiceImp;->pushCluster(Lcom/byd/lane/observer/BydLaneObserverImp;I)V
+
+    return-void
+.end method
+
+.method public reenterClusterLane()V
+    .locals 2
+
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->isInLane()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    return-void
+
+    :cond_0
+    invoke-virtual {p0}, Lcom/byd/lane/LaneSdkServiceImp;->clusterObserver()Lcom/byd/lane/observer/BydLaneObserverImp;
+
+    move-result-object v0
+
+    if-nez v0, :cond_1
+
+    return-void
+
+    :cond_1
+    # 退出->进入期间抑制"按普通模式贴参数"，否则会把刚进入的车道级改坏
+    const/4 v1, 0x1
+
+    invoke-static {v1}, Lcom/byd/lane/ClusterLaneMode;->setBusy(Z)V
+
+    invoke-static {v0, v1}, Lcom/byd/lane/LaneSdkServiceImp;->pushCluster(Lcom/byd/lane/observer/BydLaneObserverImp;I)V
+
+    const/4 v1, 0x0
+
+    invoke-static {v0, v1}, Lcom/byd/lane/LaneSdkServiceImp;->pushCluster(Lcom/byd/lane/observer/BydLaneObserverImp;I)V
+
+    invoke-static {v1}, Lcom/byd/lane/ClusterLaneMode;->setBusy(Z)V
+
+    const/4 v1, 0x1
+
+    invoke-static {v1}, Lcom/byd/lane/ClusterLaneMode;->scheduleApply(Z)V
+
     return-void
 .end method
 
@@ -685,10 +837,52 @@
 
     invoke-virtual {v2, p3, p4}, Lcom/byd/lane/observer/BydLaneObserverImp;->setMapCenter(FF)V
 
-    xor-int/lit8 p1, p2, 0x1
+    xor-int/lit8 v3, p2, 0x1
 
-    invoke-virtual {v2, p1}, Lcom/byd/lane/observer/BydLaneObserverImp;->doDnpRoadControl(I)V
+    invoke-virtual {v2, v3}, Lcom/byd/lane/observer/BydLaneObserverImp;->doDnpRoadControl(I)V
 
+    if-ne p1, v1, :cond_2
+
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->getMode()I
+
+    move-result v0
+
+    const/4 v2, 0x2
+
+    if-eq v0, v2, :cond_2
+
+    iget-object v1, p0, Lcom/byd/lane/LaneSdkServiceImp;->laneObservers:Ljava/util/Map;
+
+    invoke-static {v2}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    invoke-interface {v1, v2}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    check-cast v1, Lcom/byd/lane/observer/BydLaneObserverImp;
+
+    if-eqz v1, :cond_2
+
+    const/4 v2, 0x1
+
+    if-ne v0, v2, :cond_3
+
+    const/4 v3, 0x1
+
+    invoke-virtual {v1}, Lcom/byd/lane/observer/BydLaneObserverImp;->isSDKInLane()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_3
+
+    const/4 v3, 0x0
+
+    :cond_3
+    invoke-static {v1, v3}, Lcom/byd/lane/LaneSdkServiceImp;->pushCluster(Lcom/byd/lane/observer/BydLaneObserverImp;I)V
+
+    :cond_2
     return-void
 
     :cond_0
@@ -1072,6 +1266,10 @@
 .method public stopLane()V
     .locals 2
 
+    const/4 v0, 0x0
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->scheduleApply(Z)V
+
     invoke-static {}, Lf/k/l/j/b;->e()Lf/k/l/j/b;
 
     move-result-object v0
@@ -1141,3 +1339,4 @@
 
     return-void
 .end method
+

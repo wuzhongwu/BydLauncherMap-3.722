@@ -343,13 +343,13 @@
 
     move-result-object v0
 
-    invoke-static {}, Lf/k/v/g;->d()Lf/k/v/g;
+    new-instance v1, Lf/k/v/h;
 
-    move-result-object v1
+    invoke-direct {v1}, Lf/k/v/h;-><init>()V
 
     move-object v2, p1
 
-    invoke-virtual {v1, p1, v0}, Lf/k/v/g;->g(Landroid/content/Context;Ljava/lang/String;)Ljava/io/InputStream;
+    invoke-virtual {v1, p1, v0}, Lf/k/v/h;->d(Landroid/content/Context;Ljava/lang/String;)Ljava/io/InputStream;
 
     move-result-object v1
     :try_end_0

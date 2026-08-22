@@ -30,7 +30,7 @@
         }
     .end annotation
 
-    .line 217
+    .line 236
     iput-object p1, p0, Lcom/byd/mockgps/MockGpsPanel$10;->val$ctx:Landroid/content/Context;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -43,17 +43,17 @@
 .method public onClick(Landroid/view/View;)V
     .registers 4
 
-    .line 220
+    .line 239
     invoke-static {}, Lcom/byd/mockgps/MockGps;->isFollowRoad()Z
 
     move-result p1
 
     xor-int/lit8 p1, p1, 0x1
 
-    .line 221
+    .line 240
     invoke-static {p1}, Lcom/byd/mockgps/MockGps;->setFollowRoad(Z)V
 
-    .line 222
+    .line 241
     # getter for: Lcom/byd/mockgps/MockGpsPanel;->followView:Landroid/widget/TextView;
     invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$300()Landroid/widget/TextView;
 
@@ -61,7 +61,7 @@
 
     if-eqz v0, :cond_1a
 
-    .line 223
+    .line 242
     # getter for: Lcom/byd/mockgps/MockGpsPanel;->followView:Landroid/widget/TextView;
     invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$300()Landroid/widget/TextView;
 
@@ -74,7 +74,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 225
+    .line 244
     :cond_1a
     iget-object p0, p0, Lcom/byd/mockgps/MockGpsPanel$10;->val$ctx:Landroid/content/Context;
 
