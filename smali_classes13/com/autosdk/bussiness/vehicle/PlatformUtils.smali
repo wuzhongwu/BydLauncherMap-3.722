@@ -5259,11 +5259,9 @@
 
     # 中间
     #const v2, 0x1
-    # 右边
-    #const v2, 0x2
-    invoke-static {}, Lcom/wzw/utils/map/MapSharedPreferences;->getInstrumentUiInterface()I
-
-    move-result v2
+    # 右边：必须固定为 2。小屏车道箭头条和面板左右偏移都只在 ==2 的分支里生效，
+    # 跟随 SP 会让这两个功能同时失效。地图中心点另行读 SP。
+    const v2, 0x2
 
 
     const-string v3, "PlatformUtils"

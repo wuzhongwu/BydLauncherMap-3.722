@@ -863,6 +863,14 @@
 
     if-nez v0, :cond_0
 
+    iget v0, p0, Lf/k/l/h/c;->a:I
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->shouldKeepLaneNavi(I)Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
     iget-object v0, p0, Lf/k/l/h/c;->e:Lcom/autonavi/gbl/lane/LaneNaviService;
 
     if-eqz v0, :cond_0

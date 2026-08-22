@@ -38,6 +38,12 @@
 
 .field private static paramTitle:Landroid/widget/TextView;
 
+.field private static tabBtns:[Landroid/widget/TextView;
+
+.field private static tabBoxes:[Landroid/widget/LinearLayout;
+
+.field private static curTab:I
+
 
 # direct methods
 .method static constructor <clinit>()V
@@ -916,7 +922,7 @@
 
     invoke-direct {v2, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    const-string v3, "仪表视角"
+    const-string v3, "普通"
 
     invoke-virtual {v2, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
@@ -956,9 +962,68 @@
 
     invoke-virtual {v1, v2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
 
+    # 参数分组：标签行 + 每组一个容器，同一时间只显示一组，面板高度不再随参数增加而变长
+    const/4 v2, 0x3
+
+    new-array v3, v2, [Landroid/widget/TextView;
+
+    sput-object v3, Lcom/byd/mockgps/MockGpsPanel;->tabBtns:[Landroid/widget/TextView;
+
+    new-array v2, v2, [Landroid/widget/LinearLayout;
+
+    sput-object v2, Lcom/byd/mockgps/MockGpsPanel;->tabBoxes:[Landroid/widget/LinearLayout;
+
+    const/4 v2, 0x0
+
+    :goto_tab
+    const/4 v3, 0x3
+
+    if-ge v2, v3, :cond_tab_end
+
+    invoke-static {v2}, Lcom/byd/mockgps/MockGpsPanel;->tabName(I)Ljava/lang/String;
+
+    move-result-object v3
+
+    new-instance v4, Lcom/byd/mockgps/TabSwitch;
+
+    invoke-direct {v4, v2}, Lcom/byd/mockgps/TabSwitch;-><init>(I)V
+
+    invoke-static {p0, v3, v4}, Lcom/byd/mockgps/MockGpsPanel;->button(Landroid/content/Context;Ljava/lang/String;Landroid/view/View$OnClickListener;)Landroid/widget/TextView;
+
+    move-result-object v3
+
+    invoke-virtual {v1, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
+
+    sget-object v4, Lcom/byd/mockgps/MockGpsPanel;->tabBtns:[Landroid/widget/TextView;
+
+    aput-object v3, v4, v2
+
+    new-instance v3, Landroid/widget/LinearLayout;
+
+    invoke-direct {v3, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
+
+    const/4 v4, 0x1
+
+    invoke-virtual {v3, v4}, Landroid/widget/LinearLayout;->setOrientation(I)V
+
+    invoke-virtual {v0, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;)V
+
+    sget-object v4, Lcom/byd/mockgps/MockGpsPanel;->tabBoxes:[Landroid/widget/LinearLayout;
+
+    aput-object v3, v4, v2
+
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_tab
+
+    :cond_tab_end
     move-object v2, p0
 
-    move-object v3, v0
+    const/4 v3, 0x0
+
+    invoke-static {v3}, Lcom/byd/mockgps/MockGpsPanel;->box(I)Landroid/widget/LinearLayout;
+
+    move-result-object v3
 
     const-string v4, "缩放"
 
@@ -974,7 +1039,11 @@
 
     move-object v2, p0
 
-    move-object v3, v0
+    const/4 v3, 0x0
+
+    invoke-static {v3}, Lcom/byd/mockgps/MockGpsPanel;->box(I)Landroid/widget/LinearLayout;
+
+    move-result-object v3
 
     const-string v4, "俯仰角"
 
@@ -990,7 +1059,11 @@
 
     move-object v2, p0
 
-    move-object v3, v0
+    const/4 v3, 0x0
+
+    invoke-static {v3}, Lcom/byd/mockgps/MockGpsPanel;->box(I)Landroid/widget/LinearLayout;
+
+    move-result-object v3
 
     const-string v4, "车模左右"
 
@@ -1006,7 +1079,11 @@
 
     move-object v2, p0
 
-    move-object v3, v0
+    const/4 v3, 0x0
+
+    invoke-static {v3}, Lcom/byd/mockgps/MockGpsPanel;->box(I)Landroid/widget/LinearLayout;
+
+    move-result-object v3
 
     const-string v4, "车模上下"
 
@@ -1022,7 +1099,11 @@
 
     move-object v2, p0
 
-    move-object v3, v0
+    const/4 v3, 0x1
+
+    invoke-static {v3}, Lcom/byd/mockgps/MockGpsPanel;->box(I)Landroid/widget/LinearLayout;
+
+    move-result-object v3
 
     const-string v4, "面板左右"
 
@@ -1038,7 +1119,11 @@
 
     move-object v2, p0
 
-    move-object v3, v0
+    const/4 v3, 0x1
+
+    invoke-static {v3}, Lcom/byd/mockgps/MockGpsPanel;->box(I)Landroid/widget/LinearLayout;
+
+    move-result-object v3
 
     const-string v4, "面板上下"
 
@@ -1052,12 +1137,145 @@
 
     invoke-static/range {v2 .. v8}, Lcom/byd/mockgps/MockGpsPanel;->paramRow(Landroid/content/Context;Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;FFF)V
 
+    move-object v2, p0
+
+    const/4 v3, 0x2
+
+    invoke-static {v3}, Lcom/byd/mockgps/MockGpsPanel;->box(I)Landroid/widget/LinearLayout;
+
+    move-result-object v3
+
+    const-string v4, "巡航条左右"
+
+    const-string v5, "cruise_dx"
+
+    const/high16 v6, 0x40a00000    # 5.0f
+
+    const/high16 v7, -0x3c060000    # -500.0f
+
+    const/high16 v8, 0x43fa0000    # 500.0f
+
+    invoke-static/range {v2 .. v8}, Lcom/byd/mockgps/MockGpsPanel;->paramRow(Landroid/content/Context;Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;FFF)V
+
+    move-object v2, p0
+
+    const/4 v3, 0x2
+
+    invoke-static {v3}, Lcom/byd/mockgps/MockGpsPanel;->box(I)Landroid/widget/LinearLayout;
+
+    move-result-object v3
+
+    const-string v4, "巡航条上下"
+
+    const-string v5, "cruise_dy"
+
+    const/high16 v6, 0x40a00000    # 5.0f
+
+    const/high16 v7, -0x3c060000    # -500.0f
+
+    const/high16 v8, 0x43fa0000    # 500.0f
+
+    invoke-static/range {v2 .. v8}, Lcom/byd/mockgps/MockGpsPanel;->paramRow(Landroid/content/Context;Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;FFF)V
+
+    sget v1, Lcom/byd/mockgps/MockGpsPanel;->curTab:I
+
+    invoke-static {v1}, Lcom/byd/mockgps/MockGpsPanel;->selectTab(I)V
 
     const/4 v1, 0x0
 
     sput-boolean v1, Lcom/byd/mockgps/MockGpsPanel;->collapsed:Z
 
     return-object v0
+.end method
+
+.method private static tabName(I)Ljava/lang/String;
+    .locals 1
+
+    const/4 v0, 0x1
+
+    if-ne p0, v0, :cond_0
+
+    const-string v0, "卡片"
+
+    return-object v0
+
+    :cond_0
+    const/4 v0, 0x2
+
+    if-ne p0, v0, :cond_1
+
+    const-string v0, "巡航"
+
+    return-object v0
+
+    :cond_1
+    const-string v0, "视角"
+
+    return-object v0
+.end method
+
+.method private static box(I)Landroid/widget/LinearLayout;
+    .locals 1
+
+    sget-object v0, Lcom/byd/mockgps/MockGpsPanel;->tabBoxes:[Landroid/widget/LinearLayout;
+
+    aget-object v0, v0, p0
+
+    return-object v0
+.end method
+
+.method public static selectTab(I)V
+    .locals 6
+
+    sput p0, Lcom/byd/mockgps/MockGpsPanel;->curTab:I
+
+    sget-object v0, Lcom/byd/mockgps/MockGpsPanel;->tabBoxes:[Landroid/widget/LinearLayout;
+
+    sget-object v1, Lcom/byd/mockgps/MockGpsPanel;->tabBtns:[Landroid/widget/TextView;
+
+    if-eqz v0, :cond_end
+
+    if-eqz v1, :cond_end
+
+    const/4 v2, 0x0
+
+    :goto_0
+    array-length v3, v0
+
+    if-ge v2, v3, :cond_end
+
+    aget-object v3, v0, v2
+
+    aget-object v4, v1, v2
+
+    if-ne v2, p0, :cond_off
+
+    const/4 v5, 0x0
+
+    invoke-virtual {v3, v5}, Landroid/widget/LinearLayout;->setVisibility(I)V
+
+    const/4 v5, -0x1
+
+    invoke-virtual {v4, v5}, Landroid/widget/TextView;->setTextColor(I)V
+
+    goto :goto_1
+
+    :cond_off
+    const/16 v5, 0x8
+
+    invoke-virtual {v3, v5}, Landroid/widget/LinearLayout;->setVisibility(I)V
+
+    const v5, -0x777778
+
+    invoke-virtual {v4, v5}, Landroid/widget/TextView;->setTextColor(I)V
+
+    :goto_1
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_0
+
+    :cond_end
+    return-void
 .end method
 
 .method public static toggleCollapse(Landroid/widget/TextView;)V
@@ -1110,6 +1328,13 @@
     goto :goto_1
 
     :cond_2
+    if-nez v1, :cond_notab
+
+    sget v2, Lcom/byd/mockgps/MockGpsPanel;->curTab:I
+
+    invoke-static {v2}, Lcom/byd/mockgps/MockGpsPanel;->selectTab(I)V
+
+    :cond_notab
     if-eqz p0, :cond_5
 
     if-eqz v1, :cond_3
@@ -1706,12 +1931,12 @@
 
     if-eqz v1, :cond_pt_norm
 
-    const-string v1, "仪表视角 · 车道级"
+    const-string v1, "车道级"
 
     goto :goto_pt
 
     :cond_pt_norm
-    const-string v1, "仪表视角 · 普通"
+    const-string v1, "普通"
 
     :goto_pt
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V

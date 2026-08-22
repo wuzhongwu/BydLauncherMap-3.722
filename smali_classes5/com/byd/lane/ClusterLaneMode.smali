@@ -15,6 +15,12 @@
 
 .field private static final sReenter:Lcom/byd/lane/ClusterLaneMode;
 
+.field private static final sApplierLate2:Lcom/byd/lane/ClusterLaneMode;
+
+.field private static final sAutoEnter:Lcom/byd/lane/ClusterLaneMode;
+
+.field private static sCruiseLane:Landroid/view/View;
+
 .field private static sBusy:Z
 
 .field private static sMode:I
@@ -67,6 +73,22 @@
     invoke-direct {v0, v1}, Lcom/byd/lane/ClusterLaneMode;-><init>(I)V
 
     sput-object v0, Lcom/byd/lane/ClusterLaneMode;->sReenter:Lcom/byd/lane/ClusterLaneMode;
+
+    new-instance v0, Lcom/byd/lane/ClusterLaneMode;
+
+    const/4 v1, 0x0
+
+    invoke-direct {v0, v1}, Lcom/byd/lane/ClusterLaneMode;-><init>(I)V
+
+    sput-object v0, Lcom/byd/lane/ClusterLaneMode;->sApplierLate2:Lcom/byd/lane/ClusterLaneMode;
+
+    new-instance v0, Lcom/byd/lane/ClusterLaneMode;
+
+    const/4 v1, 0x3
+
+    invoke-direct {v0, v1}, Lcom/byd/lane/ClusterLaneMode;-><init>(I)V
+
+    sput-object v0, Lcom/byd/lane/ClusterLaneMode;->sAutoEnter:Lcom/byd/lane/ClusterLaneMode;
 
     new-instance v0, Landroid/os/Handler;
 
@@ -190,6 +212,194 @@
     return-void
 .end method
 
+.method public static onLaneDataReady(I)V
+    .locals 4
+
+    # 仪表设为"始终车道级"时自行进入，不受主屏手动退出状态影响
+    const/4 v0, 0x2
+
+    if-eq p0, v0, :cond_0
+
+    return-void
+
+    :cond_0
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->getMode()I
+
+    move-result v0
+
+    const/4 v1, 0x1
+
+    if-eq v0, v1, :cond_1
+
+    return-void
+
+    :cond_1
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->isInLane()Z
+
+    move-result v0
+
+    if-eqz v0, :cond_2
+
+    return-void
+
+    :cond_2
+    sget-boolean v0, Lcom/byd/lane/ClusterLaneMode;->sBusy:Z
+
+    if-eqz v0, :cond_3
+
+    return-void
+
+    :cond_3
+    sget-object v0, Lcom/byd/lane/ClusterLaneMode;->sHandler:Landroid/os/Handler;
+
+    sget-object v1, Lcom/byd/lane/ClusterLaneMode;->sAutoEnter:Lcom/byd/lane/ClusterLaneMode;
+
+    invoke-virtual {v0, v1}, Landroid/os/Handler;->removeCallbacks(Ljava/lang/Runnable;)V
+
+    const-wide/16 v2, 0x1f4
+
+    invoke-virtual {v0, v1, v2, v3}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
+
+    return-void
+.end method
+
+.method public static shouldKeepLaneNavi(I)Z
+    .locals 2
+
+    # 仅主屏退出时判断：仪表设为"始终车道级"且仍在车道级，
+    # 就不能关全局共享的 LaneNaviService
+    const/4 v0, 0x1
+
+    if-eq p0, v0, :cond_0
+
+    const/4 v0, 0x0
+
+    return v0
+
+    :cond_0
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->getMode()I
+
+    move-result v1
+
+    if-eq v1, v0, :cond_1
+
+    const/4 v0, 0x0
+
+    return v0
+
+    :cond_1
+    sget-object v1, Lcom/byd/lane/ClusterLaneMode;->sService:Lcom/byd/lane/LaneSdkServiceImp;
+
+    if-nez v1, :cond_2
+
+    const/4 v0, 0x0
+
+    return v0
+
+    :cond_2
+    invoke-virtual {v1}, Lcom/byd/lane/LaneSdkServiceImp;->clusterObserver()Lcom/byd/lane/observer/BydLaneObserverImp;
+
+    move-result-object v1
+
+    if-nez v1, :cond_3
+
+    const/4 v0, 0x0
+
+    return v0
+
+    :cond_3
+    invoke-virtual {v1}, Lcom/byd/lane/observer/BydLaneObserverImp;->isSDKInLane()Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public static bindCruiseLane(Landroid/view/View;)V
+    .locals 0
+
+    sput-object p0, Lcom/byd/lane/ClusterLaneMode;->sCruiseLane:Landroid/view/View;
+
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->applyCruiseOffset()V
+
+    return-void
+.end method
+
+.method public static applyCruiseOffset()V
+    .locals 5
+
+    sget-object v0, Lcom/byd/lane/ClusterLaneMode;->sCruiseLane:Landroid/view/View;
+
+    if-nez v0, :cond_0
+
+    return-void
+
+    :cond_0
+    const-string v1, "cruise_dx"
+
+    invoke-static {v1}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Landroid/view/View;->setTranslationX(F)V
+
+    const-string v1, "cruise_dy"
+
+    invoke-static {v1}, Lcom/byd/lane/ClusterLaneMode;->getAuto(Ljava/lang/String;)F
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Landroid/view/View;->setTranslationY(F)V
+
+    # 平移会超出父容器边界被裁切，且不触发完整重绘，需关掉祖先裁剪并强制刷新
+    move-object v4, v0
+
+    const/4 v1, 0x0
+
+    const/4 v2, 0x3
+
+    :goto_0
+    if-ge v1, v2, :cond_2
+
+    invoke-virtual {v4}, Landroid/view/View;->getParent()Landroid/view/ViewParent;
+
+    move-result-object v3
+
+    instance-of v0, v3, Landroid/view/ViewGroup;
+
+    if-eqz v0, :cond_2
+
+    check-cast v3, Landroid/view/ViewGroup;
+
+    const/4 v0, 0x0
+
+    invoke-virtual {v3, v0}, Landroid/view/ViewGroup;->setClipChildren(Z)V
+
+    invoke-virtual {v3, v0}, Landroid/view/ViewGroup;->setClipToPadding(Z)V
+
+    move-object v4, v3
+
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+
+    :cond_2
+    sget-object v0, Lcom/byd/lane/ClusterLaneMode;->sCruiseLane:Landroid/view/View;
+
+    invoke-virtual {v0}, Landroid/view/View;->requestLayout()V
+
+    invoke-virtual {v0}, Landroid/view/View;->getRootView()Landroid/view/View;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_3
+
+    invoke-virtual {v0}, Landroid/view/View;->invalidate()V
+
+    :cond_3
+    return-void
+.end method
+
 .method public static isInLane()Z
     .locals 1
 
@@ -217,6 +427,27 @@
 .method public static fullKey(Ljava/lang/String;)Ljava/lang/String;
     .locals 3
 
+    # 卡片/巡航条位置：普通模式与车道级共用一份，也不分导航类型
+    const-string v0, "panel_"
+
+    invoke-virtual {p0, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_raw
+
+    const-string v0, "cruise_"
+
+    invoke-virtual {p0, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_shared
+
+    :cond_raw
+    return-object p0
+
+    :cond_shared
     invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->isInLane()Z
 
     move-result v0
@@ -243,33 +474,6 @@
 
     move-result-object v0
 
-    const-string v1, "panel_"
-
-    invoke-virtual {p0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_1
-
-    const-string v1, "_"
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-static {}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getInstance()Lcom/autosdk/bussiness/vehicle/PlatformUtils;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getNaviType()I
-
-    move-result v1
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    :cond_1
     invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v0
@@ -352,11 +556,7 @@
 
     if-eqz v1, :cond_x_end
 
-    invoke-static {}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getInstance()Lcom/autosdk/bussiness/vehicle/PlatformUtils;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getInstrumentUiTypeInterface()I
+    invoke-static {}, Lcom/wzw/utils/map/MapSharedPreferences;->getInstrumentUiInterface()I
 
     move-result v2
 
@@ -399,6 +599,19 @@
     return v2
 
     :cond_dy_end
+    const-string v1, "cruise_dy"
+
+    invoke-virtual {v1, p0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_cdy_end
+
+    const/high16 v2, 0x42c80000    # 100.0f
+
+    return v2
+
+    :cond_cdy_end
     const/4 v2, 0x0
 
     return v2
@@ -455,6 +668,19 @@
     invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
 
     :cond_0
+    const-string v0, "cruise_"
+
+    invoke-virtual {p0, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_cruise_end
+
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->applyCruiseOffset()V
+
+    return-void
+
+    :cond_cruise_end
     const-string v0, "panel_"
 
     invoke-virtual {p0, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
@@ -476,7 +702,7 @@
 .method public static paramKeys()[Ljava/lang/String;
     .locals 3
 
-    const/4 v0, 0x6
+    const/16 v0, 0x8
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -513,6 +739,18 @@
     const/4 v1, 0x5
 
     const-string v2, "panel_dy"
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x6
+
+    const-string v2, "cruise_dx"
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x7
+
+    const-string v2, "cruise_dy"
 
     aput-object v2, v0, v1
 
@@ -581,8 +819,24 @@
 .end method
 
 .method public static adjust(II)I
-    .locals 1
+    .locals 2
 
+    # 只调小屏导航的卡片，全屏导航保持原厂位置
+    invoke-static {}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getInstance()Lcom/autosdk/bussiness/vehicle/PlatformUtils;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lcom/autosdk/bussiness/vehicle/PlatformUtils;->getNaviType()I
+
+    move-result v0
+
+    const/4 v1, 0x3
+
+    if-eq v0, v1, :cond_small
+
+    return p1
+
+    :cond_small
     const/4 v0, 0x3
 
     if-ne p0, v0, :cond_0
@@ -645,6 +899,19 @@
 
     iget v0, p0, Lcom/byd/lane/ClusterLaneMode;->kind:I
 
+    const/4 v1, 0x3
+
+    if-ne v0, v1, :cond_notauto
+
+    sget-object v0, Lcom/byd/lane/ClusterLaneMode;->sService:Lcom/byd/lane/LaneSdkServiceImp;
+
+    if-eqz v0, :cond_done
+
+    invoke-virtual {v0}, Lcom/byd/lane/LaneSdkServiceImp;->applyClusterLaneMode()V
+
+    return-void
+
+    :cond_notauto
     const/4 v1, 0x1
 
     if-ne v0, v1, :cond_apply
@@ -683,6 +950,23 @@
     invoke-virtual {v0, v1}, Landroid/os/Handler;->removeCallbacks(Ljava/lang/Runnable;)V
 
     const-wide/16 v2, 0x4b0
+
+    invoke-virtual {v0, v1, v2, v3}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
+
+    # 引擎进入动画 1000ms，单次补偿会被尾帧覆盖，再补两次
+    sget-object v1, Lcom/byd/lane/ClusterLaneMode;->sApplierLate2:Lcom/byd/lane/ClusterLaneMode;
+
+    invoke-virtual {v0, v1}, Landroid/os/Handler;->removeCallbacks(Ljava/lang/Runnable;)V
+
+    const-wide/16 v2, 0x960
+
+    invoke-virtual {v0, v1, v2, v3}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
+
+    sget-object v1, Lcom/byd/lane/ClusterLaneMode;->sApplier:Lcom/byd/lane/ClusterLaneMode;
+
+    invoke-virtual {v0, v1}, Landroid/os/Handler;->removeCallbacks(Ljava/lang/Runnable;)V
+
+    const-wide/16 v2, 0xdac
 
     invoke-virtual {v0, v1, v2, v3}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
 
