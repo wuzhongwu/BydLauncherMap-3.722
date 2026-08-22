@@ -5,6 +5,7 @@
 # interfaces
 .implements Landroid/view/View$OnClickListener;
 .implements Landroid/content/DialogInterface$OnClickListener;
+.implements Landroid/view/ViewTreeObserver$OnWindowFocusChangeListener;
 
 
 # annotations
@@ -43,6 +44,8 @@
 .field private mBtnLaneShow:Lcom/autonavi/view/custom/CustomBtnSwitchView;
 
 .field private mBuildingSwitchId:I
+
+.field private mWeatherSwitchId:I
 
 .field private mMockGpsSwitchId:I
 
@@ -1320,6 +1323,12 @@
 
     invoke-virtual {v0, v1, p1}, Lcom/autosdk/bussiness/map/MapController;->setBuildingNormal(IZ)V
 
+    const/4 v1, 0x2
+
+    invoke-virtual {v0, v1, p1}, Lcom/autosdk/bussiness/map/MapController;->set3Dobj(IZ)V
+
+    invoke-virtual {v0, v1, p1}, Lcom/autosdk/bussiness/map/MapController;->setBuildingNormal(IZ)V
+
     return-void
 .end method
 
@@ -1389,10 +1398,161 @@
     return-void
 .end method
 
+.method private isWeatherEnabled()Z
+    .locals 4
+
+    invoke-static {}, Lf/h/c/n0/l2;->g()Landroid/content/Context;
+
+    move-result-object v0
+
+    const/4 v1, 0x0
+
+    if-nez v0, :cond_0
+
+    return v1
+
+    :cond_0
+    const-string v2, "byd_dynamic_weather"
+
+    const/4 v3, 0x0
+
+    invoke-virtual {v0, v2, v3}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    const-string v2, "enabled"
+
+    invoke-interface {v0, v2, v1}, Landroid/content/SharedPreferences;->getBoolean(Ljava/lang/String;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method private setWeatherEnabled(Z)V
+    .locals 3
+
+    invoke-static {}, Lf/h/c/n0/l2;->g()Landroid/content/Context;
+
+    move-result-object v0
+
+    if-nez v0, :cond_0
+
+    return-void
+
+    :cond_0
+    const-string v1, "byd_dynamic_weather"
+
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->getSharedPreferences(Ljava/lang/String;I)Landroid/content/SharedPreferences;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences;->edit()Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v0
+
+    const-string v1, "enabled"
+
+    invoke-interface {v0, v1, p1}, Landroid/content/SharedPreferences$Editor;->putBoolean(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;
+
+    move-result-object v0
+
+    invoke-interface {v0}, Landroid/content/SharedPreferences$Editor;->apply()V
+
+    return-void
+.end method
+
+.method private initWeatherSwitch()V
+    .locals 4
+
+    invoke-static {}, Lf/h/c/n0/l2;->g()Landroid/content/Context;
+
+    move-result-object v0
+
+    if-nez v0, :cond_0
+
+    return-void
+
+    :cond_0
+    invoke-virtual {v0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v1
+
+    const-string v2, "btn_dynamic_weather"
+
+    const-string v3, "id"
+
+    invoke-virtual {v0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-virtual {v1, v2, v3, v0}, Landroid/content/res/Resources;->getIdentifier(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I
+
+    move-result v0
+
+    iput v0, p0, Lcom/autosdk/settings/view/SettingNaviView;->mWeatherSwitchId:I
+
+    if-nez v0, :cond_1
+
+    return-void
+
+    :cond_1
+    invoke-virtual {p0, v0}, Lcom/autosdk/settings/view/BaseSettingView;->findViewById(I)Landroid/view/View;
+
+    move-result-object v0
+
+    if-nez v0, :cond_2
+
+    return-void
+
+    :cond_2
+    invoke-virtual {p0, v0, p0}, Lcom/autosdk/settings/view/SettingNaviView;->setOnClickListener(Landroid/view/View;Landroid/view/View$OnClickListener;)Z
+
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->isWeatherEnabled()Z
+
+    move-result v1
+
+    invoke-virtual {p0, v0, v1}, Lcom/autosdk/settings/view/SettingNaviView;->setViewSelected(Landroid/view/View;Z)V
+
+    invoke-static {v1}, Lcom/byd/weather/DynamicWeather;->setEnabled(Z)V
+
+    return-void
+.end method
+
+.method private refreshWeatherSwitch()V
+    .locals 2
+
+    iget v0, p0, Lcom/autosdk/settings/view/SettingNaviView;->mWeatherSwitchId:I
+
+    if-nez v0, :cond_0
+
+    return-void
+
+    :cond_0
+    invoke-virtual {p0, v0}, Lcom/autosdk/settings/view/BaseSettingView;->findViewById(I)Landroid/view/View;
+
+    move-result-object v0
+
+    if-nez v0, :cond_1
+
+    return-void
+
+    :cond_1
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->isWeatherEnabled()Z
+
+    move-result v1
+
+    invoke-virtual {p0, v0, v1}, Lcom/autosdk/settings/view/SettingNaviView;->setViewSelected(Landroid/view/View;Z)V
+
+    return-void
+.end method
+
 .method private static carModelIdNames()[Ljava/lang/String;
     .locals 3
 
-    const/4 v0, 0x5
+    const/4 v0, 0x6
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -1426,13 +1586,19 @@
 
     aput-object v2, v0, v1
 
+    const/4 v1, 0x5
+
+    const-string v2, "tv_car_model_custom"
+
+    aput-object v2, v0, v1
+
     return-object v0
 .end method
 
 .method private static carModelValues()[Ljava/lang/String;
     .locals 3
 
-    const/4 v0, 0x5
+    const/4 v0, 0x6
 
     new-array v0, v0, [Ljava/lang/String;
 
@@ -1463,6 +1629,12 @@
     const/4 v1, 0x4
 
     const-string v2, "R1/"
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x5
+
+    const-string v2, "Custom/"
 
     aput-object v2, v0, v1
 
@@ -1574,6 +1746,13 @@
 .method private applyCarModelSelection()V
     .locals 7
 
+    iget-object v0, p0, Lcom/autosdk/settings/view/BaseUIView;->mMainView:Landroid/view/View;
+
+    if-nez v0, :cond_view_ready
+
+    return-void
+
+    :cond_view_ready
     invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->getCarModel()Ljava/lang/String;
 
     move-result-object v0
@@ -1621,6 +1800,35 @@
     goto :goto_0
 
     :cond_end
+    const-string v0, "tv_car_model_custom_status"
+
+    invoke-static {v0}, Lcom/autosdk/settings/view/SettingNaviView;->carModelViewId(Ljava/lang/String;)I
+
+    move-result v0
+
+    if-eqz v0, :cond_status_skip
+
+    invoke-virtual {p0, v0}, Lcom/autosdk/settings/view/BaseSettingView;->findViewById(I)Landroid/view/View;
+
+    move-result-object v1
+
+    instance-of v2, v1, Landroid/widget/TextView;
+
+    if-eqz v2, :cond_status_skip
+
+    check-cast v1, Landroid/widget/TextView;
+
+    invoke-static {}, Lf/h/c/n0/l2;->g()Landroid/content/Context;
+
+    move-result-object v2
+
+    invoke-static {v2}, Lcom/byd/carmodel/CarModelPackageManager;->currentLabel(Landroid/content/Context;)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    :cond_status_skip
     return-void
 .end method
 
@@ -1660,13 +1868,49 @@
     goto :goto_0
 
     :cond_end
+    iget-object v1, p0, Lcom/autosdk/settings/view/BaseUIView;->mMainView:Landroid/view/View;
+
+    if-eqz v1, :cond_focus_skip
+
+    invoke-virtual {v1}, Landroid/view/View;->getViewTreeObserver()Landroid/view/ViewTreeObserver;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p0}, Landroid/view/ViewTreeObserver;->removeOnWindowFocusChangeListener(Landroid/view/ViewTreeObserver$OnWindowFocusChangeListener;)V
+
+    invoke-virtual {v1, p0}, Landroid/view/ViewTreeObserver;->addOnWindowFocusChangeListener(Landroid/view/ViewTreeObserver$OnWindowFocusChangeListener;)V
+
+    :cond_focus_skip
     invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->applyCarModelSelection()V
 
     return-void
 .end method
 
+.method public onWindowFocusChanged(Z)V
+    .locals 2
+
+    if-eqz p1, :cond_nofocus
+
+    iget-object v0, p0, Lcom/autosdk/settings/view/BaseUIView;->mMainView:Landroid/view/View;
+
+    if-eqz v0, :cond_nofocus
+
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->applyCarModelSelection()V
+
+    invoke-static {}, Lcom/byd/carmodel/CarModelPackageManager;->consumeRestartPrompt()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_nofocus
+
+    invoke-direct {p0, v0}, Lcom/autosdk/settings/view/SettingNaviView;->showCarModelRestartDialog(Landroid/view/View;)V
+
+    :cond_nofocus
+    return-void
+.end method
+
 .method private handleCarModelClick(Landroid/view/View;)Z
-    .locals 6
+    .locals 7
 
     invoke-virtual {p1}, Landroid/view/View;->getId()I
 
@@ -1698,6 +1942,36 @@
     if-ne v0, v4, :cond_next
 
     aget-object v4, v2, v3
+
+    invoke-virtual {p1}, Landroid/view/View;->getContext()Landroid/content/Context;
+
+    move-result-object v6
+
+    const-string v5, "Custom/"
+
+    invoke-virtual {v5, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_builtin
+
+    invoke-static {v6}, Lcom/byd/carmodel/CarModelPackageManager;->handleCustomClick(Landroid/content/Context;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_custom_done
+
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->applyCarModelSelection()V
+
+    invoke-direct {p0, p1}, Lcom/autosdk/settings/view/SettingNaviView;->showCarModelRestartDialog(Landroid/view/View;)V
+
+    :cond_custom_done
+    const/4 v5, 0x1
+
+    return v5
+
+    :cond_builtin
+    invoke-static {v6}, Lcom/byd/carmodel/CarModelResolver;->deactivate(Landroid/content/Context;)V
 
     invoke-direct {p0, v4}, Lcom/autosdk/settings/view/SettingNaviView;->setCarModel(Ljava/lang/String;)V
 
@@ -1976,6 +2250,182 @@
     invoke-virtual {p0, v0, v1}, Lcom/autosdk/settings/view/SettingNaviView;->setViewSelected(Landroid/view/View;Z)V
 
     return-void
+.end method
+
+.method private static clusterLaneIdNames()[Ljava/lang/String;
+    .locals 3
+
+    const/4 v0, 0x3
+
+    new-array v0, v0, [Ljava/lang/String;
+
+    const/4 v1, 0x0
+
+    const-string v2, "tv_cluster_lane_follow"
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x1
+
+    const-string v2, "tv_cluster_lane_always"
+
+    aput-object v2, v0, v1
+
+    const/4 v1, 0x2
+
+    const-string v2, "tv_cluster_lane_off"
+
+    aput-object v2, v0, v1
+
+    return-object v0
+.end method
+
+.method private applyClusterLaneSelection()V
+    .locals 5
+
+    iget-object v0, p0, Lcom/autosdk/settings/view/BaseUIView;->mMainView:Landroid/view/View;
+
+    if-nez v0, :cond_view_ready
+
+    return-void
+
+    :cond_view_ready
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->getMode()I
+
+    move-result v0
+
+    invoke-static {}, Lcom/autosdk/settings/view/SettingNaviView;->clusterLaneIdNames()[Ljava/lang/String;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    :goto_0
+    array-length v3, v1
+
+    if-ge v2, v3, :cond_end
+
+    aget-object v3, v1, v2
+
+    invoke-static {v3}, Lcom/autosdk/settings/view/SettingNaviView;->carModelViewId(Ljava/lang/String;)I
+
+    move-result v3
+
+    if-eqz v3, :cond_next
+
+    invoke-virtual {p0, v3}, Lcom/autosdk/settings/view/BaseSettingView;->findViewById(I)Landroid/view/View;
+
+    move-result-object v3
+
+    if-eqz v3, :cond_next
+
+    if-ne v2, v0, :cond_unselected
+
+    const/4 v4, 0x1
+
+    goto :goto_1
+
+    :cond_unselected
+    const/4 v4, 0x0
+
+    :goto_1
+    invoke-virtual {p0, v3, v4}, Lcom/autosdk/settings/view/SettingNaviView;->setViewSelected(Landroid/view/View;Z)V
+
+    :cond_next
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_0
+
+    :cond_end
+    return-void
+.end method
+
+.method private initClusterLaneSelector()V
+    .locals 3
+
+    invoke-static {}, Lcom/autosdk/settings/view/SettingNaviView;->clusterLaneIdNames()[Ljava/lang/String;
+
+    move-result-object v0
+
+    const/4 v1, 0x0
+
+    :goto_0
+    array-length v2, v0
+
+    if-ge v1, v2, :cond_end
+
+    aget-object v2, v0, v1
+
+    invoke-static {v2}, Lcom/autosdk/settings/view/SettingNaviView;->carModelViewId(Ljava/lang/String;)I
+
+    move-result v2
+
+    if-eqz v2, :cond_next
+
+    invoke-virtual {p0, v2}, Lcom/autosdk/settings/view/BaseSettingView;->findViewById(I)Landroid/view/View;
+
+    move-result-object v2
+
+    if-eqz v2, :cond_next
+
+    invoke-virtual {p0, v2, p0}, Lcom/autosdk/settings/view/SettingNaviView;->setOnClickListener(Landroid/view/View;Landroid/view/View$OnClickListener;)Z
+
+    :cond_next
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+
+    :cond_end
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->applyClusterLaneSelection()V
+
+    return-void
+.end method
+
+.method private handleClusterLaneClick(Landroid/view/View;)Z
+    .locals 4
+
+    invoke-virtual {p1}, Landroid/view/View;->getId()I
+
+    move-result v0
+
+    invoke-static {}, Lcom/autosdk/settings/view/SettingNaviView;->clusterLaneIdNames()[Ljava/lang/String;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    :goto_0
+    array-length v3, v1
+
+    if-ge v2, v3, :cond_end
+
+    aget-object v3, v1, v2
+
+    invoke-static {v3}, Lcom/autosdk/settings/view/SettingNaviView;->carModelViewId(Ljava/lang/String;)I
+
+    move-result v3
+
+    if-eqz v3, :cond_next
+
+    if-ne v0, v3, :cond_next
+
+    invoke-static {v2}, Lcom/byd/lane/ClusterLaneMode;->setMode(I)V
+
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->applyClusterLaneSelection()V
+
+    const/4 v0, 0x1
+
+    return v0
+
+    :cond_next
+    add-int/lit8 v2, v2, 0x1
+
+    goto :goto_0
+
+    :cond_end
+    const/4 v0, 0x0
+
+    return v0
 .end method
 
 .method private updateLaneSwitchState(Landroid/view/View;)V
@@ -4546,9 +4996,13 @@
 
     invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->initBuildingSwitch()V
 
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->initWeatherSwitch()V
+
     invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->initMockGpsSwitch()V
 
     invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->initCarModelSelector()V
+
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->initClusterLaneSelector()V
 
     invoke-static {}, Lf/h/c/n0/p2;->n()Z
 
@@ -4841,9 +5295,13 @@
 
     invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->refreshBuildingSwitch()V
 
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->refreshWeatherSwitch()V
+
     invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->refreshMockGpsSwitch()V
 
     invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->applyCarModelSelection()V
+
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->applyClusterLaneSelection()V
 
     return-void
 .end method
@@ -4977,6 +5435,15 @@
         }
     .end annotation
 
+    invoke-direct {p0, p1}, Lcom/autosdk/settings/view/SettingNaviView;->handleClusterLaneClick(Landroid/view/View;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_cluster_skip
+
+    return-void
+
+    :cond_cluster_skip
     invoke-direct {p0, p1}, Lcom/autosdk/settings/view/SettingNaviView;->handleCarModelClick(Landroid/view/View;)Z
 
     move-result v0
@@ -5019,6 +5486,35 @@
     return-void
 
     :cond_building_skip
+    iget v0, p0, Lcom/autosdk/settings/view/SettingNaviView;->mWeatherSwitchId:I
+
+    if-eqz v0, :cond_weather_skip
+
+    if-ne p1, v0, :cond_weather_skip
+
+    invoke-virtual {p0, p1}, Lcom/autosdk/settings/view/BaseSettingView;->findViewById(I)Landroid/view/View;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/autonavi/view/custom/CustomBtnSwitchView;
+
+    if-eqz v0, :cond_weather_skip
+
+    invoke-virtual {v0}, Lcom/autonavi/view/custom/CustomBtnSwitchView;->isSelected()Z
+
+    move-result v1
+
+    xor-int/lit8 v1, v1, 0x1
+
+    invoke-virtual {v0, v1}, Lcom/autonavi/view/custom/CustomBtnSwitchView;->setSelected(Z)V
+
+    invoke-direct {p0, v1}, Lcom/autosdk/settings/view/SettingNaviView;->setWeatherEnabled(Z)V
+
+    invoke-static {v1}, Lcom/byd/weather/DynamicWeather;->setEnabled(Z)V
+
+    return-void
+
+    :cond_weather_skip
     iget v0, p0, Lcom/autosdk/settings/view/SettingNaviView;->mMockGpsSwitchId:I
 
     if-eqz v0, :cond_mockgps_skip
@@ -6798,6 +7294,8 @@
 
 .method public onWidgetResume()V
     .locals 0
+
+    invoke-direct {p0}, Lcom/autosdk/settings/view/SettingNaviView;->applyCarModelSelection()V
 
     return-void
 .end method

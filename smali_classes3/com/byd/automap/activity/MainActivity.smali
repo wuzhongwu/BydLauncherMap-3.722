@@ -9203,6 +9203,8 @@
 
     invoke-super {p0, p1}, Lcom/autosdk/framework/activity/BaseActivity;->onCreate(Landroid/os/Bundle;)V
 
+    invoke-static {}, Lcom/byd/weather/DynamicWeather;->start()V
+
     iget-object v0, p0, Lcom/byd/automap/activity/MainActivity;->mInitLaneService:Lf/k/c/l/c;
 
     invoke-virtual {v0}, Lf/k/c/l/c;->d()V

@@ -587,7 +587,7 @@
     invoke-static {}, Lcom/wzw/day/LocalTimeDayStatusUtil;->initAutoUpdate()V
 
     .line 244
-    invoke-static {}, Ljava/time/LocalTime;->now()Ljava/time/LocalTime;
+    invoke-static {}, Lcom/byd/mockgps/MockTime;->localTimeNow()Ljava/time/LocalTime;
 
     move-result-object v0
 
@@ -1137,7 +1137,7 @@
     .locals 3
 
     .line 95
-    invoke-static {}, Ljava/time/LocalTime;->now()Ljava/time/LocalTime;
+    invoke-static {}, Lcom/byd/mockgps/MockTime;->localTimeNow()Ljava/time/LocalTime;
 
     move-result-object v0
 

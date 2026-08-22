@@ -745,6 +745,14 @@
 
     invoke-static {p1, p2, v0}, Lcom/autosdk/bussiness/common/utils/Logger;->e(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
 
+    iget-object v0, p0, Lcom/byd/lane/observer/BydLaneObserverImp;->laneLayerController:Lf/k/l/h/c;
+
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Lf/k/l/h/c;->aa()V
+
+    :cond_0
+
     return-void
 .end method
 
@@ -778,6 +786,14 @@
     const-string p2, "onExitLaneActionStatus id:{?} status:{?}"
 
     invoke-static {p1, p2, v0}, Lcom/autosdk/bussiness/common/utils/Logger;->e(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    iget-object v0, p0, Lcom/byd/lane/observer/BydLaneObserverImp;->laneLayerController:Lf/k/l/h/c;
+
+    if-eqz v0, :cond_0
+
+    invoke-virtual {v0}, Lf/k/l/h/c;->aa()V
+
+    :cond_0
 
     return-void
 .end method

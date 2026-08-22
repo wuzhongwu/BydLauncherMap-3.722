@@ -114,6 +114,19 @@
         }
     .end annotation
 
+    invoke-static {}, Lf/h/c/c0;->a()Landroid/app/Application;
+
+    move-result-object v0
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelResolver;->resolve(Landroid/content/Context;I)Landroid/util/Pair;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_imported_model_skip
+
+    return-object v0
+
+    :cond_imported_model_skip
     invoke-static {p1}, Lf/k/l/l/h;->b(I)Landroid/util/Pair;
 
     move-result-object v0

@@ -23910,6 +23910,12 @@
 
     invoke-virtual {v0}, Lf/k/l/i/a;->c()V
 
+    invoke-static {}, Lf/h/c/c0;->a()Landroid/app/Application;
+
+    move-result-object v0
+
+    invoke-static {v0}, Lcom/byd/carmodel/CarModelExtraSignals;->install(Landroid/content/Context;)V
+
     invoke-static {}, Lf/h/p/j/h;->b()Lf/h/p/j/h;
 
     move-result-object v0

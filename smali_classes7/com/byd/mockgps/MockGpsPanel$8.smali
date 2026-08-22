@@ -30,7 +30,7 @@
         }
     .end annotation
 
-    .line 200
+    .line 219
     iput-object p1, p0, Lcom/byd/mockgps/MockGpsPanel$8;->val$ctx:Landroid/content/Context;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -43,7 +43,7 @@
 .method public onClick(Landroid/view/View;)V
     .registers 2
 
-    .line 203
+    .line 222
     iget-object p0, p0, Lcom/byd/mockgps/MockGpsPanel$8;->val$ctx:Landroid/content/Context;
 
     # invokes: Lcom/byd/mockgps/MockGpsPanel;->askTeleport(Landroid/content/Context;)V

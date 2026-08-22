@@ -658,6 +658,22 @@
     :cond_1
     invoke-virtual {v1, v0, v3}, Lcom/autosdk/bussiness/map/MapController;->set3Dobj(Lcom/autonavi/gbl/map/MapView;Z)V
 
+    invoke-static {}, Lcom/autosdk/bussiness/map/BuildingPref;->getShow()Z
+
+    move-result v2
+
+    invoke-static {}, Lcom/autosdk/bussiness/map/MapController;->getInstance()Lcom/autosdk/bussiness/map/MapController;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v0, v2}, Lcom/autosdk/bussiness/map/MapController;->set3Dobj(Lcom/autonavi/gbl/map/MapView;Z)V
+
+    invoke-virtual {v0}, Lcom/autonavi/gbl/map/MapView;->getOperatorBusiness()Lcom/autonavi/gbl/map/OperatorBusiness;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v2}, Lcom/autonavi/gbl/map/OperatorBusiness;->showBuildingNormal(Z)V
+
     invoke-static {}, Lcom/autosdk/bussiness/map/MapController;->getInstance()Lcom/autosdk/bussiness/map/MapController;
 
     move-result-object v1

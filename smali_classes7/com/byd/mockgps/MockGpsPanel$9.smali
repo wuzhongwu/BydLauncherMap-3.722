@@ -30,7 +30,7 @@
         }
     .end annotation
 
-    .line 206
+    .line 225
     iput-object p1, p0, Lcom/byd/mockgps/MockGpsPanel$9;->val$ctx:Landroid/content/Context;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -43,14 +43,14 @@
 .method public onClick(Landroid/view/View;)V
     .registers 2
 
-    .line 209
+    .line 228
     invoke-static {}, Lcom/byd/mockgps/MockGps;->backToStart()Z
 
     move-result p1
 
     if-eqz p1, :cond_11
 
-    .line 210
+    .line 229
     iget-object p0, p0, Lcom/byd/mockgps/MockGpsPanel$9;->val$ctx:Landroid/content/Context;
 
     const-string p1, "\u5df2\u56de\u5230\u771f\u5b9e\u4f4d\u7f6e"
@@ -58,13 +58,13 @@
     # invokes: Lcom/byd/mockgps/MockGpsPanel;->toast(Landroid/content/Context;Ljava/lang/String;)V
     invoke-static {p0, p1}, Lcom/byd/mockgps/MockGpsPanel;->access$200(Landroid/content/Context;Ljava/lang/String;)V
 
-    .line 211
+    .line 230
     # invokes: Lcom/byd/mockgps/MockGpsPanel;->refresh()V
     invoke-static {}, Lcom/byd/mockgps/MockGpsPanel;->access$000()V
 
     goto :goto_18
 
-    .line 213
+    .line 232
     :cond_11
     iget-object p0, p0, Lcom/byd/mockgps/MockGpsPanel$9;->val$ctx:Landroid/content/Context;
 

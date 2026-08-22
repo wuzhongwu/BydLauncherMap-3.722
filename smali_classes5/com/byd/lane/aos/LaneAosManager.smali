@@ -34,6 +34,8 @@
 
 .field private laneMapViewObserver:Lcom/byd/lane/observer/LaneMapViewObserver;
 
+.field private laneMapViewObserverCluster:Lcom/byd/lane/observer/LaneMapViewObserver;
+
 .field private laneState:I
 
 
@@ -804,6 +806,75 @@
     invoke-static {v1, v2, v0}, Lcom/autosdk/bussiness/common/utils/Logger;->e(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
 
     :goto_0
+    invoke-virtual {p0}, Lcom/byd/lane/aos/LaneAosManager;->initLaneServiceForCluster()V
+
+    return-void
+.end method
+
+.method public initLaneServiceForCluster()V
+    .locals 4
+
+    const-string v3, "LaneAosManager"
+
+    iget-object v0, p0, Lcom/byd/lane/aos/LaneAosManager;->laneMapViewObserverCluster:Lcom/byd/lane/observer/LaneMapViewObserver;
+
+    if-eqz v0, :cond_0
+
+    return-void
+
+    :cond_0
+    sget-boolean v0, Lf/k/l/g/a/b;->e:Z
+
+    if-nez v0, :cond_1
+
+    const/4 v0, 0x0
+
+    new-array v0, v0, [Ljava/lang/Object;
+
+    const-string v1, "[initLaneServiceForCluster] skip: not activate"
+
+    invoke-static {v3, v1, v0}, Lcom/autosdk/bussiness/common/utils/Logger;->e(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
+    return-void
+
+    :cond_1
+    new-instance v0, Lcom/byd/lane/observer/LaneMapViewObserver;
+
+    const/4 v1, 0x2
+
+    const/4 v2, 0x0
+
+    invoke-direct {v0, v1, v2}, Lcom/byd/lane/observer/LaneMapViewObserver;-><init>(II)V
+
+    invoke-static {}, Lcom/autosdk/bussiness/map/MapController;->getInstance()Lcom/autosdk/bussiness/map/MapController;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1, v0}, Lcom/autosdk/bussiness/map/MapController;->addMapViewObserver(ILcom/autonavi/gbl/map/observer/IMapviewObserver;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
+    iput-object v0, p0, Lcom/byd/lane/aos/LaneAosManager;->laneMapViewObserverCluster:Lcom/byd/lane/observer/LaneMapViewObserver;
+
+    :cond_2
+    const/4 v0, 0x1
+
+    new-array v0, v0, [Ljava/lang/Object;
+
+    invoke-static {v1}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    move-result-object v1
+
+    const/4 v2, 0x0
+
+    aput-object v1, v0, v2
+
+    const-string v1, "[initLaneServiceForCluster] addMapViewObserver(2) result:{?}"
+
+    invoke-static {v3, v1, v0}, Lcom/autosdk/bussiness/common/utils/Logger;->e(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
+
     return-void
 .end method
 

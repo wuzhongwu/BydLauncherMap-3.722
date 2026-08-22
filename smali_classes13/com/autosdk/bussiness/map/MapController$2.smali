@@ -67,33 +67,9 @@
 .end method
 
 .method public requireMapResource(JLcom/autonavi/gbl/map/model/MapResourceParam;)[B
-    .locals 1
+    .locals 0
 
-    const/4 p1, 0x2
-
-    new-array p1, p1, [Ljava/lang/Object;
-
-    iget-object p2, p0, Lcom/autosdk/bussiness/map/MapController$2;->this$0:Lcom/autosdk/bussiness/map/MapController;
-
-    iget-object p2, p2, Lcom/autosdk/bussiness/map/MapController;->styleString:Ljava/lang/String;
-
-    const/4 v0, 0x0
-
-    aput-object p2, p1, v0
-
-    iget-object p2, p3, Lcom/autonavi/gbl/map/model/MapResourceParam;->name:Ljava/lang/String;
-
-    const/4 v0, 0x1
-
-    aput-object p2, p1, v0
-
-    const-string p2, "MapController"
-
-    const-string v0, "requireMapResource()=====styleString:{?},mapResourceParam:{?}"
-
-    invoke-static {p2, v0, p1}, Lcom/autosdk/bussiness/common/utils/Logger;->e(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V
-
-    invoke-static {}, Lcom/autosdk/bussiness/map/MapExtraStyleHelper;->getMapAssetHelper()Lcom/autosdk/bussiness/map/MapExtraStyleHelper$MapAssetHelper;
+    invoke-static {}, Lcom/autosdk/bussiness/map/MapStyleHelper;->getMapAssetHelper()Lcom/autosdk/bussiness/map/MapStyleHelper$MapAssetHelper;
 
     move-result-object p1
 
@@ -103,11 +79,7 @@
 
     move-result-object p2
 
-    iget-object v0, p0, Lcom/autosdk/bussiness/map/MapController$2;->this$0:Lcom/autosdk/bussiness/map/MapController;
-
-    iget-object v0, v0, Lcom/autosdk/bussiness/map/MapController;->styleString:Ljava/lang/String;
-
-    invoke-virtual {p1, p2, p3, v0}, Lcom/autosdk/bussiness/map/MapExtraStyleHelper$MapAssetHelper;->requireResource(Landroid/content/Context;Lcom/autonavi/gbl/map/model/MapResourceParam;Ljava/lang/String;)[B
+    invoke-virtual {p1, p2, p3}, Lcom/autosdk/bussiness/map/MapStyleHelper$MapAssetHelper;->requireResource(Landroid/content/Context;Lcom/autonavi/gbl/map/model/MapResourceParam;)[B
 
     move-result-object p1
 

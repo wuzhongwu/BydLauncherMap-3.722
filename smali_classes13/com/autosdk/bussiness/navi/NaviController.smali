@@ -2463,6 +2463,8 @@
 .method public onNaviStop(JI)V
     .locals 3
 
+    invoke-static {}, Lcom/byd/weather/DynamicWeather;->onNaviStop()V
+
     const/4 v0, 0x2
 
     new-array v0, v0, [Ljava/lang/Object;
@@ -3734,6 +3736,8 @@
             ">;)V"
         }
     .end annotation
+
+    invoke-static {p1}, Lcom/byd/weather/DynamicWeather;->onNaviWeather(Ljava/lang/Object;)V
 
     iget-object v0, p0, Lcom/autosdk/bussiness/navi/NaviController;->mMessenger:Lcom/autosdk/bussiness/navi/NaviMessenger;
 

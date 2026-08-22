@@ -285,6 +285,8 @@
 
     invoke-virtual {v0, v1}, Lcom/autosdk/bussiness/vehicle/BydAutoSpeed;->registerListener(Lcom/autosdk/bussiness/vehicle/BydAutoSpeed$OnSpeedChangeListener;)V
 
+    invoke-static {}, Lcom/byd/carmodel/CarModelExtraSignals;->syncMovementFromSpeed()V
+
     return-void
 .end method
 
@@ -453,6 +455,10 @@
 .method public i(Z)V
     .locals 3
 
+    const-string v0, "CS_Clearance"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
+
     sget-object v0, Lf/k/l/i/b;->a:Ljava/lang/Object;
 
     monitor-enter v0
@@ -509,6 +515,10 @@
 .method public j(Z)V
     .locals 3
 
+    const-string v0, "CS_Lower"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
+
     sget-object v0, Lf/k/l/i/b;->a:Ljava/lang/Object;
 
     monitor-enter v0
@@ -564,6 +574,10 @@
 
 .method public k(Z)V
     .locals 5
+
+    const-string v0, "CS_Emergency"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
 
     sget-object v0, Lf/k/l/i/b;->a:Ljava/lang/Object;
 
@@ -653,6 +667,10 @@
 .method public l(Z)V
     .locals 3
 
+    const-string v0, "CS_High"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
+
     sget-object v0, Lf/k/l/i/b;->a:Ljava/lang/Object;
 
     monitor-enter v0
@@ -708,6 +726,10 @@
 
 .method public m(Z)V
     .locals 5
+
+    const-string v0, "CS_LDirection"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
 
     sget-object v0, Lf/k/l/i/b;->a:Ljava/lang/Object;
 
@@ -797,6 +819,10 @@
 .method public n(Z)V
     .locals 5
 
+    const-string v0, "CS_RDirection"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
+
     sget-object v0, Lf/k/l/i/b;->a:Ljava/lang/Object;
 
     monitor-enter v0
@@ -885,6 +911,10 @@
 .method public o(Z)V
     .locals 3
 
+    const-string v0, "CS_Stop"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
+
     sget-object v0, Lf/k/l/i/b;->a:Ljava/lang/Object;
 
     monitor-enter v0
@@ -940,6 +970,14 @@
 
 .method public p(Z)V
     .locals 7
+
+    const-string v0, "CS_WF"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
+
+    const-string v0, "CS_WB"
+
+    invoke-static {v0, p1}, Lcom/byd/carmodel/CarModelExtraSignals;->onBuiltInEvent(Ljava/lang/String;Z)V
 
     const-string v0, "CarStyleManager"
 
