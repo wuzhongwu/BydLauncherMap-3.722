@@ -173,6 +173,10 @@
     .line 24
     invoke-static {p0}, Lcom/wzw/utils/map/MapSharedPreferences;->changeInstrumentUiInterface(I)V
 
+    invoke-static {}, Lg/a/c/p;->relayout()V
+
+    invoke-static {}, Lcom/byd/lane/ClusterLaneMode;->reapply()V
+
     .line 26
     :cond_0
     const-string p0, "INSTRUMENT_SMALL_ZOOM_LEVEL"
