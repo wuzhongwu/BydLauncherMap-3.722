@@ -892,6 +892,11 @@
 
     invoke-virtual {v0, v3}, Ljava/util/concurrent/atomic/AtomicBoolean;->set(Z)V
 
+    # 本屏已具备车道级数据，通知仪表按"始终车道级"自行进入
+    iget v0, p0, Lcom/byd/lane/observer/BydLaneObserverImp;->mSurfaceViewId:I
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->onLaneDataReady(I)V
+
     iget-object v0, p0, Lcom/byd/lane/observer/BydLaneObserverImp;->mHandler:Landroid/os/Handler;
 
     iget-object v1, p0, Lcom/byd/lane/observer/BydLaneObserverImp;->lanePositionDisableRunnable:Ljava/lang/Runnable;

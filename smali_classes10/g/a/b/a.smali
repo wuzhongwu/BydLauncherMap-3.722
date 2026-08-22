@@ -524,6 +524,10 @@
 
     invoke-virtual {v0}, Lcom/autonavi/view/custom/CustomExtCruiseTrafficLaneView;->setDriveWayShow()V
 
+    iget-object v0, p0, Lg/a/b/a;->e:Lcom/autonavi/view/custom/CustomExtCruiseTrafficLaneView;
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->bindCruiseLane(Landroid/view/View;)V
+
     :cond_a
     return-void
 .end method
@@ -1010,6 +1014,10 @@
 
     invoke-virtual {v0}, Lcom/autonavi/view/custom/CustomExtCruiseTrafficLaneView;->setDriveWayShow()V
 
+    iget-object v0, p0, Lg/a/b/a;->e:Lcom/autonavi/view/custom/CustomExtCruiseTrafficLaneView;
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->bindCruiseLane(Landroid/view/View;)V
+
     :cond_11
     return-void
 .end method
@@ -1176,6 +1184,10 @@
 
     invoke-virtual/range {v2 .. v8}, Lcom/autonavi/view/custom/CustomExtCruiseTrafficLaneView;->buildDriveWay(Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;ZZ)Z
 
+    iget-object v0, p0, Lg/a/b/a;->e:Lcom/autonavi/view/custom/CustomExtCruiseTrafficLaneView;
+
+    invoke-static {v0}, Lcom/byd/lane/ClusterLaneMode;->bindCruiseLane(Landroid/view/View;)V
+
     return-void
 .end method
 
@@ -1286,6 +1298,8 @@
     check-cast p1, Lcom/autonavi/view/custom/CustomExtCruiseTrafficLaneView;
 
     iput-object p1, p0, Lg/a/b/a;->e:Lcom/autonavi/view/custom/CustomExtCruiseTrafficLaneView;
+
+    invoke-static {p1}, Lcom/byd/lane/ClusterLaneMode;->bindCruiseLane(Landroid/view/View;)V
 
     invoke-virtual {p1}, Lcom/autonavi/skin/view/SkinConstraintLayout;->getAdpter()Lcom/autonavi/skin/inter/ISkin$ISkinAdapter;
 
